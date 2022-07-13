@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class SpawnerControl : MonoBehaviour
 { 
+    public ComputeShader computeShader;
+    public int ObjCount = 20;
+    public GameObject floor;
+    public float MaxSpeed = 10;
+    public float MinSpeed = 1;
+    public float MaxWeight = 10;
+    public float MinWeight = 1;
+    public GameObject obj;
+    private float distance = 1;
+    private bool[] finished;
+    private Sphere[] spheres;
+    private GameObject[] gobjSpheres;
+    private ComputeBuffer computeBuffer;
+    private float time;
+    private bool gpu = false;
+    private bool cpu;
+    private float delta;
+    private float count;
+    private bool avaliableSpeedup = true;
     void Start()
     {
         this.spheres = new Sphere[ObjCount * ObjCount];
