@@ -113,4 +113,34 @@ public class SpawnerControl : MonoBehaviour
             this.gobjSpheres[i].GetComponent<Renderer>().material.color = c;
         }
     }
+
+     private void ResetGpu()
+    {
+        ResetToInit();
+
+        int totalSize = sizeof(float) * 3 + sizeof(float) * 3 + sizeof(float) + sizeof(float) * 3 + sizeof(float) + sizeof(float);
+        computeBuffer = new ComputeBuffer(spheres.Length, totalSize);
+        computeBuffer.SetData(spheres);
+
+        computeShader.SetBuffer(0, "objs", computeBuffer);
+    }
+
+    private void ResetToInit()
+    {
+        avaliableSpeedup = true;
+        computeBuffer.Dispose();
+        for (int i = 0, k = 0; i < ObjCount; i++)
+        {
+            float offsetX = (-ObjCount / 2 + i);
+            for (int j = 0; j < ObjCount; j++, k++)
+            {
+                float offsetZ = (-ObjCount / 2 + j);
+                gobjSpheres[k].transform.position = new Vector3(offsetX * distance + .5f, transform.position.y, offsetZ * distance + .5f);
+                spheres[k].position = gobjSpheres[i].transform.position;
+                spheres[k].speed = Random.Range(MinSpeed, MaxSpeed);
+                spheres[k].weight = Random.Range(MinWeight, MaxWeight);
+                finished[k] = false;
+            }
+        }
+    }
 }
