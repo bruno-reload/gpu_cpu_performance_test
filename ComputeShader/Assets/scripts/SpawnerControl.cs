@@ -167,3 +167,13 @@ public class SpawnerControl : MonoBehaviour
         }
     }
 }
+
+struct Sphere
+{
+    public Vector3 direction;
+    public Vector3 position;
+    public Vector3 color;
+    public float weight;
+    public float radius;
+    public float speed;
+}
