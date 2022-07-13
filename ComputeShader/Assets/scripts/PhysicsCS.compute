@@ -21,5 +21,21 @@ float rand(float2 co) {
 }
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
+    delta = tf - delta;
+	float f = objs[id.x].weight * (objs[id.x].speed/tf);
+	float speed =  (f / objs[id.x].weight) * delta;
+	if (objs[id.x].position.y - speed * delta - objs[id.x].radius > floor) {
+		objs[id.x].position.y += speed * delta * objs[id.x].direction.y;
+		objs[id.x].color = float3(1, 1, 1);
+	}
+	else {
+		objs[id.x].position.y = floor + objs[id.x].radius;
+
+		float r = rand(float2(objs[id.x].position.x, objs[id.x].position.z * objs[id.x].speed));
+		float g = rand(float2(objs[id.x].position.y * objs[id.x].speed, objs[id.x].position.z + objs[id.x].position.x));
+		float b = rand(float2(objs[id.x].position.z,objs[id.x].position.x * objs[id.x].speed));
+
+		objs[id.x].color = float3(r, g, b);
+	}
 	
 }
