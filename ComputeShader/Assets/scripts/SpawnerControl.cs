@@ -143,4 +143,27 @@ public class SpawnerControl : MonoBehaviour
             }
         }
     }
+     private void OnGUI()
+    {
+        if (GUI.Button(new Rect(Vector2.zero, new Vector2(100, 40)), "gpu"))
+        {
+            ResetGpu();
+            cpu = false;
+            gpu = true;
+        }
+        if (GUI.Button(new Rect(new Vector2(0, 60), new Vector2(100, 40)), "cpu"))
+        {
+            ResetToInit();
+            gpu = false;
+            cpu = true;
+        }
+        if (GUI.Button(new Rect(new Vector2(0, 120), new Vector2(100, 40)), "reset"))
+        {
+            ResetToInit();
+            gpu = false;
+            cpu = false;
+            delta = 0;
+            time = 0;
+        }
+    }
 }
